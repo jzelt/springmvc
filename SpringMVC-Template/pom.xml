@@ -14,6 +14,13 @@
 		<org.aspectj-version>1.7.4</org.aspectj-version>
 		<org.slf4j-version>1.7.5</org.slf4j-version>
 		<log4j-version>1.2.17</log4j-version>
+		<javax.inject-version>1</javax.inject-version>
+		<javax.servlet-servlet-api-version>2.5</javax.servlet-servlet-api-version>
+		<javax.servlet-jstl-version>1.2</javax.servlet-jstl-version>
+		<javax.servlet.jsp-jsp-api-version>2.2</javax.servlet.jsp-jsp-api-version>
+		<junit-version>4.11</junit-version>
+		<maven-compiler-plugin-version>3.1</maven-compiler-plugin-version>
+		<tomcat7-maven-plugin-version>2.2</tomcat7-maven-plugin-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	
@@ -90,42 +97,47 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- @Inject -->
 		<dependency>
+			<!-- @Inject annotation support -->
 			<groupId>javax.inject</groupId>
 			<artifactId>javax.inject</artifactId>
-			<version>1</version>
+			<version>${javax.inject-version}</version>
 		</dependency>
-				
+
 		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
+			<version>${javax.servlet-servlet-api-version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>jsp-api</artifactId>
-			<version>2.1</version>
+			<version>${javax.servlet.jsp-jsp-api-version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
-			<version>1.2</version>
+			<version>${javax.servlet-jstl-version}</version>
 		</dependency>
-	
+
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.7</version>
+			<version>${junit-version}</version>
 			<scope>test</scope>
-		</dependency>        
+		</dependency>
+
 	</dependencies>
+
     <build>
+		<finalName>springmvc</finalName>	<!-- otherwise web app will be deployed at /<artifactId>-<version> -->
         <plugins>
+
+            <!-- I don't see any need for this plugin, which is for generating Eclipse IDE files.
             <plugin>
                 <artifactId>maven-eclipse-plugin</artifactId>
                 <version>2.9</version>
@@ -139,11 +151,19 @@
                     <downloadSources>true</downloadSources>
                     <downloadJavadocs>true</downloadJavadocs>
                 </configuration>
-            </plugin>
+            </plugin> -->
+
+
+			<!-- The Maven Compiler Plugin is used to compile the sources of your project. 
+				This <plugin> element is used here to set the JVM source and target compliance level, 
+				as well as to set other parameters used by this plug-in; otherwise, I don|t believe 
+				that this <plugin> element needs to be specified here. 
+				See: http://maven.apache.org/plugins/maven-compiler-plugin/, 
+				http://maven.apache.org/plugins/maven-compiler-plugin/compile-mojo.html -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
+                <version>${maven-compiler-plugin-version}</version>
                 <configuration>
                     <source>${java-version}</source>
                     <target>${java-version}</target>
@@ -152,6 +172,21 @@
                     <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
+
+			<!-- The Tomcat7 Maven Plugin provides goals so that we can deploy the app to my 
+				local private Tomcat7 instance using "mvn tomcat7:[re]reploy -->
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>${tomcat7-maven-plugin-version}</version>
+				<configuration>
+					<url>http://localhost:8080/manager/text</url>	<!-- *not* .../manager/html -->
+					<server>myTomcat</server>	<!-- must match name in /home/jeffreyz/.m2/settings.xml -->
+					<path>/${project.build.finalName}</path>
+				</configuration>
+			</plugin>
+            
+            <!-- I don't see any need for this plug-in, which is for executing system and Java programs.
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -159,7 +194,8 @@
                 <configuration>
                     <mainClass>org.test.int1.Main</mainClass>
                 </configuration>
-            </plugin>
+            </plugin> -->
+
         </plugins>
     </build>
 </project>
