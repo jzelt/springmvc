@@ -1,30 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+<web-app version="2.5" 
+	xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<!-- Log4j configuration loading:
+	     By default, log4j will simply read its configuration from a "log4j.properties" or 
+	     "log4j.xml" file in the root of the classpath, so this block is not needed unless
+	     you want to override the default log4j initialization.
+	     If used, this listener should be registered before ContextLoaderListener.
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>/WEB-INF/classes/log4j.xml</param-value>
+	</context-param>
+	-->
+
+	<!-- The definition of the root Spring container shared by all servlets and filters: -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring/root-context.xml</param-value>
 	</context-param>
-	
-	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<!-- This is the bootstrap listener to start up and shut down Spring's root WebApplicationContext.
+	     It creates the Spring container shared by all servlets and filters: -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
-	<!-- Processes application requests -->
+	<!-- The webAppRootKey is a context parameter that exposes the webapp root as a system property 
+	     that can be used elsewhere. It will have a value of ${CATALINA_HOME}/webapp/<webapp-name>.
+	     For example, it can be used in log4j configuration files as, for example:
+
+			log4j.appender.testfile.File=${springmvcappname.root}/WEB-INF/testlog.log
+		
+		See:
+			http://stackoverflow.com/questions/5014651/webapproot-in-spring
+			http://forum.spring.io/forum/spring-projects/web/15031-problems-with-setting-webapprootkey-in-web-xml
+	-->
+	<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>springmvcappname.root</param-value>
+	</context-param>
+
+	<!-- Set up the DispatcherServlet to processes all application requests: -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
+			<!-- By default, the name of the context file must be XXX-servlet.xml where XXX is the 
+			     name of servlet. If this file has another name or is not in the default location,
+			     we can use the <contextConfigLocation> element to specify the name of this file 
+			     and the path to it. -->
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>

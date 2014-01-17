@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.borgsoftware</groupId>
-	<artifactId>springmvc</artifactId>
+	<artifactId>springmvcappname</artifactId>
 	<name>SpringMVC-Template</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
@@ -134,7 +134,7 @@
 	</dependencies>
 
     <build>
-		<finalName>springmvc</finalName>	<!-- otherwise web app will be deployed at /<artifactId>-<version> -->
+		<finalName>springmvcappname</finalName>	<!-- otherwise web app will be deployed at /<artifactId>-<version> -->
         <plugins>
 
             <!-- I don't see any need for this plugin, which is for generating Eclipse IDE files.
@@ -155,11 +155,11 @@
 
 
 			<!-- The Maven Compiler Plugin is used to compile the sources of your project. 
-				This <plugin> element is used here to set the JVM source and target compliance level, 
-				as well as to set other parameters used by this plug-in; otherwise, I don|t believe 
-				that this <plugin> element needs to be specified here. 
-				See: http://maven.apache.org/plugins/maven-compiler-plugin/, 
-				http://maven.apache.org/plugins/maven-compiler-plugin/compile-mojo.html -->
+			     This <plugin> element is used here to set the JVM source and target compliance level, 
+			     as well as to set other parameters used by this plug-in; otherwise, I don|t believe 
+			     that this <plugin> element needs to be specified here. 
+			     See: http://maven.apache.org/plugins/maven-compiler-plugin/, 
+			     http://maven.apache.org/plugins/maven-compiler-plugin/compile-mojo.html -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -174,7 +174,7 @@
             </plugin>
 
 			<!-- The Tomcat7 Maven Plugin provides goals so that we can deploy the app to my 
-				local private Tomcat7 instance using "mvn tomcat7:[re]reploy -->
+			     local private Tomcat7 instance using "mvn tomcat7:[re]reploy -->
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
