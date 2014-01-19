@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration scan="true" scanPeriod="3 seconds" debug="true">
+
+	<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener"/>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+<!--		 <layout class="ch.qos.logback.classic.PatternLayout"> -->
+		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+		<encoder>
+			<pattern>
+				%d{HH:mm:ss.SSS} [%thread] %-5level %logger{32} - %msg%n
+			</pattern>
+		</encoder>
+<!--		 </layout> -->
+	</appender>
+
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${catalina.base}/logs/springmvcapp/logFile.log</File>
+		<rollingPolicy
+						class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>
+				${catalina.base}/logs/springmvcapp/archive/logFile.%d{yyyy-MM-dd_HH-mm}.log.zip
+<!--				 ${catalina.base}/logs/springmvcapp/archive/logFile.%d{yyyy-MM-dd}.log.zip -->
+			</FileNamePattern>
+		</rollingPolicy>
+
+<!-- 		<layout class="ch.qos.logback.classic.PatternLayout"> -->
+		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+		<encoder>
+			<Pattern>
+				%d{HH:mm:ss.SSS} [%thread] %-5level %logger{32} - %msg%n
+			</Pattern>
+		</encoder>
+<!-- 		</layout> -->
+	</appender>
+	
+	<!-- Application Loggers -->
+	<logger name="com.borgsoftware.springmvc"><level value="DEBUG" /></logger>
+	
+	<!-- 3rdparty Loggers -->
+	<logger name="org.springframework.core"><level value="DEBUG" /></logger>
+	<logger name="org.springframework.beans"><level value="DEBUG" /></logger>
+	<logger name="org.springframework.context"><level value="DEBUG" /></logger>
+	<logger name="org.springframework.web"><level value="DEBUG" /></logger>
+
+	<root level="DEBUG">
+		<appender-ref ref="STDOUT"/>
+		<appender-ref ref="FILE"/>
+	</root>
+
+	<!--<include file="/tmp/springmvcapp.xml"/>-->
+
+</configuration>
