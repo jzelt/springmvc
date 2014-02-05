@@ -9,7 +9,7 @@
 
 	<!-- DispatcherServlet Context: defines the portion of this servlet's request-processing 
 		 infrastructure that is handled using XML-based configuration for the case when the
-		 servlet's context is bootstrapped by an *XML-based* configuration file. -->
+		 servlet's context is bootstrapped by a *Java-based* configuration class. -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />

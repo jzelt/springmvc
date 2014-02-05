@@ -1,4 +1,4 @@
-package com.borgsoftware.springmvc;
+package com.borgsoftware.springmvc.web;
 
 import java.text.DateFormat;
 import java.util.Date;
