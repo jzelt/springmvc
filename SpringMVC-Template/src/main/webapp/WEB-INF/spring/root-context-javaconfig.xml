@@ -5,6 +5,6 @@
 	
 	<!-- Root Context: defines those shared resources visible to all other web components
 		 that are handled using XML-based configuration for the case when the
-		 root context is bootstrapped by an *XML-based* configuration file. -->
+		 root context is bootstrapped by a *Java-based* configuration class. -->
 		
 </beans>
