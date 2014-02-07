@@ -39,7 +39,7 @@
          one or more comma- or space-delimited paths to XML configuration files. -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>com.borgsoftware.springmvc.web.config.RootConfig</param-value>
+        <param-value>com.borgsoftware.springmvc.spring.config.RootConfig</param-value>
         <!-- <param-value>/WEB-INF/spring/root-context.xml</param-value> -->
     </context-param>
     
@@ -84,13 +84,20 @@
         <!-- As above, the config location must consist of one or more comma- or space-delimited
              and fully-qualified @Configuration Java classes if AnnotationConfigWebApplicationContext
              is specified for bootstrapping the Spring context; otherwiase, it must consist of 
-             one or more comma- or space-delimited paths to XML configuration files. If 
-             AnnotationConfigWebApplicationContext is not specified and we do not provide a path
-             to an XML configuration file, Spring MVC will look for a file named  SSS-servlet.xml 
+             one or more comma- or space-delimited paths to XML configuration files.
+             Note 1:  If we use Javaconfig here, then in addition the the @Configuration class, we
+                      can also specify one or more packages that will be scanned for annotated classes
+                      (@Configuration, @Controller, ...). This approach replaces the XML-config mechanism:
+                      <context:component-scan base-package="com.my.stuff"/>.
+             Note 2:  If AnnotationConfigWebApplicationContext is not specified and we do not provide a
+             path to an XML configuration file, Spring MVC will look for a file named  SSS-servlet.xml 
              where SSS is the name of the DispatcherServlet. -->
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>com.borgsoftware.springmvc.web.config.WebConfig</param-value>
+            <param-value>
+                com.borgsoftware.springmvc.spring.config.WebConfig
+                com.borgsoftware.springmvc.web
+            </param-value>
             <!-- <param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value> -->
         </init-param>
         <load-on-startup>1</load-on-startup>

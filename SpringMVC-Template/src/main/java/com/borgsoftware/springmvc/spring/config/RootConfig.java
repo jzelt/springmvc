@@ -1,4 +1,4 @@
-package com.borgsoftware.springmvc.web.config;
+package com.borgsoftware.springmvc.spring.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
