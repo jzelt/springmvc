@@ -19,7 +19,7 @@
     -->
 
     <!-- Configure ContextLoaderListener to use AnnotationConfigWebApplicationContext
-        instead of the default XmlWebApplicationContext -->
+         instead of the default XmlWebApplicationContext. This enables "JavaConfig". -->
     <context-param>
         <param-name>contextClass</param-name>
         <param-value>
@@ -29,7 +29,7 @@
 
     <!-- Configuration location for the root Spring container shared by all servlets and filters:
     
-         Java-based configuration:
+         Java-based configuration (JavaConfig):
          If AnnotationConfigWebApplicationContext is specified above, this must consist of one 
          or more comma- or space-delimited fully-qualified @Configuration classes. Fully-qualified 
          packages may also be specified for component-scanning.
@@ -83,15 +83,25 @@
 
         <!-- As above, the config location must consist of one or more comma- or space-delimited
              and fully-qualified @Configuration Java classes if AnnotationConfigWebApplicationContext
-             is specified for bootstrapping the Spring context; otherwiase, it must consist of 
+             is specified for bootstrapping the Spring context; otherwise, it must consist of 
              one or more comma- or space-delimited paths to XML configuration files.
+             
              Note 1:  If we use Javaconfig here, then in addition the the @Configuration class, we
                       can also specify one or more packages that will be scanned for annotated classes
                       (@Configuration, @Controller, ...). This approach replaces the XML-config mechanism:
                       <context:component-scan base-package="com.my.stuff"/>.
+                      
              Note 2:  If AnnotationConfigWebApplicationContext is not specified and we do not provide a
              path to an XML configuration file, Spring MVC will look for a file named  SSS-servlet.xml 
-             where SSS is the name of the DispatcherServlet. -->
+             where SSS is the name of the DispatcherServlet.
+             
+             com.borgsoftware.springmvc.spring.config.WebConfig is the class 
+             used for JavaConfig for Spring MVC.
+             
+             com.borgsoftware.springmvc.web is a package containing all Spring 
+             MVC controllers. This ensures all controllers will be registered
+             automatically.
+              -->
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>
