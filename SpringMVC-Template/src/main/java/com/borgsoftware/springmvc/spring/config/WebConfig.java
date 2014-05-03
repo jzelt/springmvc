@@ -3,6 +3,8 @@ package com.borgsoftware.springmvc.spring.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -33,7 +35,34 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @EnableWebMvc
 @ImportResource("/WEB-INF/spring/appServlet/servlet-context-javaconfig.xml")
+// This @PropertySource annotation allows us to use @Value in
+// HomeController.java to access property values defined in the properties file
+// specified here:
+@PropertySource("classpath:propertyfile1.properties")
 public class WebConfig extends WebMvcConfigurerAdapter {
+
+    /**
+     * This bean must be declared if any beans associated with this Spring
+     * container use {@literal @}Value notation to inject property values stored
+     * in a property file specified with a {@literal @}PropertySource
+     * annotation. The {@literal @}PropertySource annotation may appear in this
+     * configuration class or in another class processed by this container, such
+     * as an MVC controller class.
+     * 
+     * Note that each Spring container needs its own
+     * PropertySourcesPlaceholderConfigurer bean if {@literal @}Value is used
+     * with beans/classes defined in that container. For example, we need this
+     * PropertySourcesPlaceholderConfigurerbean if Spring MVC controllers will
+     * use {@literal @}Value, but RootConfig.java *also* needs its own
+     * PropertySourcesPlaceholderConfigurer bean for beans/classes that use
+     * {@literal @}Value that are defined in that container.
+     * 
+     * @return
+     */
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
 
     // 31556926 = 1-year cache period.
     @Override
